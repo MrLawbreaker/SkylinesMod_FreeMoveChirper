@@ -3,6 +3,7 @@ using UnityEngine;
 using ColossalFramework;
 using ICities;
 using ColossalFramework.Plugins;
+using ColossalFramework.UI;
 
 namespace FreeMoveChirper
 {
@@ -10,7 +11,7 @@ namespace FreeMoveChirper
     {
         public string Name
         {
-            get { return "Chirper Position Changer 1.3.1"; }
+            get { return "Chirper Position Changer 1.4"; }
         }
 
         public string Description
@@ -29,26 +30,30 @@ namespace FreeMoveChirper
         private Vector2 mousePosOnClick;
 
         //The GUI Resolution is dependent from the aspect ratio the user has set
-        private float GUIWidth = float.NaN;
-        private float GUIHeight = 1080f;
+        private float GUIWidth;
+        private float GUIHeight;
 
         private int ScreenWidth;
         private int ScreenHeight;
 
-        private bool resSupported = true;
         private bool leftClickedOnChirp = false;
         private bool wasMoved = false;
+
+        private Camera currentCam;
+        private UIView currentUIView;
 
         public override void OnCreated(IChirper c)
         {
             //Init
-            SetScreenRes();
-            SetGUISize();
+            currentUIView = ChirpPanel.instance.component.GetUIView();
+            currentCam = currentUIView.uiCamera;
+
             ChirpPanel.instance.component.BringToFront();
             currentChirper = c;
             currentChirper.SetBuiltinChirperFree(true);
-            defaultChirperPos = currentChirper.builtinChirperPosition;
             currentChirperPos = currentChirper.builtinChirperPosition;
+            defaultChirperPos = currentChirper.builtinChirperPosition;
+            
             UpdateAnchor();
         }
 
@@ -60,30 +65,8 @@ namespace FreeMoveChirper
 
         private void SetGUISize()
         {
-            float ratio = (float)ScreenWidth / (float)ScreenHeight;
-            if (ratio > 1.9)
-            {
-                resSupported = false;
-            }
-            else if (ratio >= 1.7)
-            {
-                //16:9
-                GUIWidth = 1920f;
-            }
-            else if (ratio >= 1.6)
-            {
-                //16:10
-                GUIWidth = 1730f;
-            }
-            else if (ratio >= 1.3f)
-            {
-                //4:3
-                GUIWidth = 1430f;
-            }
-            else
-            {
-                resSupported = false;
-            }
+            GUIWidth = currentUIView.GetScreenResolution().x;
+            GUIHeight = currentUIView.GetScreenResolution().y;
         }
 
         public override void OnUpdate()
@@ -97,23 +80,12 @@ namespace FreeMoveChirper
                 SetGUISize();
             }
             
-            //Check if Screen Resolution is supported
-            if (!resSupported)
-            {
-                if (float.IsNaN(GUIWidth))
-                {
-                    ChirpMessage.SendMessage("FreeMoveChirperMod", "I am sorry but your resolution is not supported");
-                    GUIWidth = 0f;
-                }
-                return;
-            }
-
             //Test if player clicked on chirp
             if (Input.GetMouseButtonDown(0))
             {
-                if (IsClickNearChirp(GetMousePos(), currentChirper.builtinChirperPosition))
+                if (IsClickNearChirp())
                 {
-                        leftClickedOnChirp = Input.GetMouseButtonDown(0);
+                        leftClickedOnChirp = true;
                 }
 
                 mousePosOnClick = GetMousePos();
@@ -216,24 +188,17 @@ namespace FreeMoveChirper
             currentChirper.SetBuiltinChirperAnchor(currentAnchor);
         }
 
-        private bool IsClickNearChirp(Vector2 mousePosOnClick, Vector2 chirperPosOnClick)
+        private bool IsClickNearChirp()
         {
-            float deltaDistance = 32.0f; //Maximum distance a click is registered on the chirper
-
-            if ((chirperPosOnClick - mousePosOnClick).magnitude < deltaDistance)
-                return true;
-            else
-                return false;
+            return ChirpPanel.instance.component.containsMouse;
         }
+
+
 
         private Vector2 GetMousePos()
         {
-            Vector2 mousePos = Event.current.mousePosition;
-
-            mousePos.x *= (GUIWidth / (float)ScreenWidth);
-            mousePos.y *= (GUIHeight / (float)ScreenHeight);
-
-            return mousePos;
+            Vector3 mouseWorldPos = Camera.current.ScreenToWorldPoint(Input.mousePosition);
+            return currentUIView.WorldPointToGUI(currentCam, mouseWorldPos);
         }
     }
 }
