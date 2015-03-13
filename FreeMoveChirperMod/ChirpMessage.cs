@@ -29,6 +29,11 @@ namespace FreeMoveChirper
             ChirpPanel.instance.AddMessage(this);
         }
 
+        public static void SendMessage(string message)
+        {
+            new ChirpMessage(message).SendMessage();
+        }
+
         public uint senderID
         {
             get { return id; }
