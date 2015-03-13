@@ -61,7 +61,11 @@ namespace FreeMoveChirper
         private void SetGUISize()
         {
             float ratio = (float)ScreenWidth / (float)ScreenHeight;
-            if (ratio >= 1.7)
+            if (ratio > 1.9)
+            {
+                resSupported = false;
+            }
+            else if (ratio >= 1.7)
             {
                 //16:9
                 GUIWidth = 1920f;
