@@ -17,10 +17,17 @@ namespace FreeMoveChirper
             this.id = id;
         }
 
+        public ChirpMessage(string sender, string message)
+        {
+            this.sender = sender;
+            this.message = message;
+            this.id = 0;
+        }
+
         public ChirpMessage(string message)
         {
-            this.message = message;
             this.sender = "Chirper";
+            this.message = message;
             this.id = 0;
         }
 
@@ -32,6 +39,16 @@ namespace FreeMoveChirper
         public static void SendMessage(string message)
         {
             new ChirpMessage(message).SendMessage();
+        }
+
+        public static void SendMessage(string sender, string message)
+        {
+            new ChirpMessage(sender, message).SendMessage();
+        }
+
+        public static void SendMessage(string sender, string message, uint id)
+        {
+            new ChirpMessage(sender, message, id).SendMessage();
         }
 
         public uint senderID
