@@ -23,8 +23,8 @@ namespace FreeMoveChirper
     {
 
         private IChirper currentChirper;
+        
         private Vector2 currentChirperPos;
-
         private Vector2 defaultChirperPos;
         private Vector2 mousePosOnClick;
 
@@ -41,8 +41,10 @@ namespace FreeMoveChirper
 
         public override void OnCreated(IChirper c)
         {
+            //Init
             SetScreenRes();
             SetGUISize();
+            ChirpPanel.instance.component.BringToFront();
             currentChirper = c;
             currentChirper.SetBuiltinChirperFree(true);
             defaultChirperPos = currentChirper.builtinChirperPosition;
@@ -82,6 +84,8 @@ namespace FreeMoveChirper
 
         public override void OnUpdate()
         {
+
+            
             //Check for change in Resolution size
             if (Screen.width != ScreenWidth || Screen.height != ScreenHeight)
             {
