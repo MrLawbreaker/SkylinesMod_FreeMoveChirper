@@ -10,7 +10,7 @@ namespace FreeMoveChirper
     {
         public string Name
         {
-            get { return "Chirper Position Changer 1.3"; }
+            get { return "Chirper Position Changer 1.3.1"; }
         }
 
         public string Description
