@@ -119,6 +119,19 @@ namespace FreeMoveChirper
                 mousePosOnClick = GetMousePos();
             }
 
+            //Has the player released the mouse button?
+            if (Input.GetMouseButtonUp(0) && leftClickedOnChirp)
+            {
+                leftClickedOnChirp = false;
+
+                if (wasMoved)
+                {
+                    ChirpPanel.instance.Collapse();
+                }
+                wasMoved = false;
+
+                UpdateAnchor();
+            }
 
             //Move chirper
             if (Input.GetMouseButton(0) && leftClickedOnChirp)
@@ -135,19 +148,6 @@ namespace FreeMoveChirper
                 }
             }
             
-            
-
-            //Has the player released the mouse button?
-            if (Input.GetMouseButtonUp(0) && leftClickedOnChirp && wasMoved)
-            {
-                leftClickedOnChirp = false;
-                wasMoved = false;
-
-                ChirpPanel.instance.Collapse();
-
-                UpdateAnchor();
-            }
-
             //Reset chirper position on key combination
             if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.O))
             {
