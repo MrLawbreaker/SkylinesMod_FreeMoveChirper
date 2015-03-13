@@ -25,6 +25,8 @@ namespace FreeMoveChirper
 
         private Vector2 defaultChirperPos;
         private Vector2 mousePosOnClick;
+        
+        private ChirperAnchor currentAnchor;
 
         private bool clickedOnChirp = false;
 
@@ -33,14 +35,17 @@ namespace FreeMoveChirper
             currentChirper = c;
             currentChirper.SetBuiltinChirperFree(true);
             defaultChirperPos = currentChirper.builtinChirperPosition;
-            currentChirper.SetBuiltinChirperAnchor(ChirperAnchor.TopCenter);
+            currentAnchor = ChirperAnchor.TopCenter;
+            currentChirper.SetBuiltinChirperAnchor(currentAnchor);
         }
 
         public override void OnUpdate()
         {
             //Test if player clicked on chirp
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1))
             {
+                ChirpMessage.SendMessage(defaultChirperPos.ToString());
+
                 if (IsClickNearChirp(GetMousePos(), currentChirper.builtinChirperPosition))
                     clickedOnChirp = true;
 
@@ -64,6 +69,12 @@ namespace FreeMoveChirper
                 {
                     currentChirper.builtinChirperPosition = GetMousePos();
                 }
+            }
+
+            //Change chirper Anchor on rightclick
+            if (Input.GetMouseButtonUp(1))
+            {
+                
             }
 
             //Reset chirper position on key combination

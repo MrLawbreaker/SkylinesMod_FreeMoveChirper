@@ -7,8 +7,8 @@
     <ProjectGuid>{1F5F4E53-17CB-46A4-B19D-4ED4D8FAD6F2}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>FreeMoveChirperMod</RootNamespace>
-    <AssemblyName>FreeMoveChirperMod</AssemblyName>
+    <RootNamespace>FreeMoveChirper</RootNamespace>
+    <AssemblyName>FreeMoveChirper</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
