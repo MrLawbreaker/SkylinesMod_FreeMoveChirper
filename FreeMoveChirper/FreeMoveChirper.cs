@@ -53,7 +53,8 @@ namespace FreeMoveChirper
             currentChirper.SetBuiltinChirperFree(true);
             currentChirperPos = currentChirper.builtinChirperPosition;
             defaultChirperPos = currentChirper.builtinChirperPosition;
-            
+            SetScreenRes();
+            SetGUISize();
             UpdateAnchor();
         }
 
