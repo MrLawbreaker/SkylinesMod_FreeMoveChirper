@@ -191,7 +191,7 @@ namespace FreeMoveChirper
 
         private bool IsClickNearChirp()
         {
-            return ChirpPanel.instance.component.containsMouse;
+            return (GetMousePos() - currentChirper.builtinChirperPosition).magnitude < 35f;
         }
 
 
