@@ -60,35 +60,6 @@ namespace FreeMoveChirper
                 UpdateAnchor();
         }
 
-
-        private bool LoadSavedPosition()
-        {
-            if (Properties.Settings.Default.position_x > 0 && Properties.Settings.Default.position_y > 0)
-            {
-                Vector2 position = new Vector2();
-                position.x = Properties.Settings.Default.position_x * GUIWidth;
-                position.y = Properties.Settings.Default.position_y * GUIHeight;
-                SetChirpPosition(position);
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        private void SetScreenRes()
-        {
-            ScreenWidth = Screen.width;
-            ScreenHeight = Screen.height;
-        }
-
-        private void SetGUISize()
-        {
-            GUIWidth = currentUIView.GetScreenResolution().x;
-            GUIHeight = currentUIView.GetScreenResolution().y;
-        }
-
         public override void OnUpdate()
         {
             //Check for change in Resolution size
@@ -122,9 +93,6 @@ namespace FreeMoveChirper
 
                     SavePosition();
                 }
-                
-
-                
             }
 
             //Move chirper
@@ -151,13 +119,32 @@ namespace FreeMoveChirper
             currentChirperPos = currentChirper.builtinChirperPosition;
         }
 
-        private void SetChirpPosition(Vector2 position, bool updateAnchor = true)
+        private void SetScreenRes()
         {
-            currentChirper.builtinChirperPosition = position;
+            ScreenWidth = Screen.width;
+            ScreenHeight = Screen.height;
+        }
 
-            currentChirperPos = position;
-            if(updateAnchor)
-                UpdateAnchor();
+        private void SetGUISize()
+        {
+            GUIWidth = currentUIView.GetScreenResolution().x;
+            GUIHeight = currentUIView.GetScreenResolution().y;
+        }
+
+        private bool LoadSavedPosition()
+        {
+            if (Properties.Settings.Default.position_x > 0 && Properties.Settings.Default.position_y > 0)
+            {
+                Vector2 position = new Vector2();
+                position.x = Properties.Settings.Default.position_x * GUIWidth;
+                position.y = Properties.Settings.Default.position_y * GUIHeight;
+                SetChirpPosition(position);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         private void ResetPosition()
@@ -175,6 +162,15 @@ namespace FreeMoveChirper
             Properties.Settings.Default.position_y = position.y;
 
             Properties.Settings.Default.Save();
+        }
+
+        private void SetChirpPosition(Vector2 position, bool updateAnchor = true)
+        {
+            currentChirper.builtinChirperPosition = position;
+
+            currentChirperPos = position;
+            if(updateAnchor)
+                UpdateAnchor();
         }
 
         private void UpdateAnchor()
