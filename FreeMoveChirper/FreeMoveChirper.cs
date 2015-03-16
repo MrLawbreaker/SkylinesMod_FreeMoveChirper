@@ -22,6 +22,7 @@ namespace FreeMoveChirper
 
     public class Chirp : ChirperExtensionBase
     {
+        private FMConfiguration config = new FMConfiguration();
 
         private IChirper currentChirper;
         
@@ -44,6 +45,7 @@ namespace FreeMoveChirper
 
         public override void OnCreated(IChirper c)
         {
+
             //Init
             currentUIView = ChirpPanel.instance.component.GetUIView();
             currentCam = currentUIView.uiCamera;
@@ -96,7 +98,7 @@ namespace FreeMoveChirper
             }
 
             //Move chirper
-            if (Input.GetMouseButton(0) && (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl)) && leftClickedOnChirp)
+            if (Input.GetMouseButton(0) && (!config.ctrlToMove || (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl))) && leftClickedOnChirp)
             {
                 float minDistance = 15.0f; //Minimum distance the user need to drag the mouse for the chirper to move
                 float distanceMoved = ((GetMousePos()) - mousePosOnClick).magnitude;
@@ -115,6 +117,13 @@ namespace FreeMoveChirper
             {
                 ResetPosition();
             }
+
+#if DEBUG
+            if (Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.LeftAlt) && Input.GetKeyDown(KeyCode.R))
+            {
+                config = new FMConfiguration();
+            }
+#endif
 
             currentChirperPos = currentChirper.builtinChirperPosition;
         }
