@@ -96,7 +96,7 @@ namespace FreeMoveChirper
             }
 
             //Move chirper
-            if (Input.GetMouseButton(0) && (Input.GetKeyDown(KeyCode.LeftControl) || Input.GetKeyDown(KeyCode.RightControl)) && leftClickedOnChirp)
+            if (Input.GetMouseButton(0) && (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl)) && leftClickedOnChirp)
             {
                 float minDistance = 15.0f; //Minimum distance the user need to drag the mouse for the chirper to move
                 float distanceMoved = ((GetMousePos()) - mousePosOnClick).magnitude;
