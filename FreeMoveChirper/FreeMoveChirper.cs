@@ -11,7 +11,7 @@ namespace FreeMoveChirper
     {
         public string Name
         {
-            get { return "Chirper Position Changer 1.5"; }
+            get { return "Chirper Position Changer 1.5.1"; }
         }
 
         public string Description
@@ -39,6 +39,7 @@ namespace FreeMoveChirper
 
         private bool leftClickedOnChirp = false;
         private bool wasMoved = false;
+        private bool ctrlToMoveChirper;
 
         private Camera currentCam;
         private UIView currentUIView;
@@ -98,7 +99,10 @@ namespace FreeMoveChirper
             }
 
             //Move chirper
-            if (Input.GetMouseButton(0) && (!config.ctrlToMove || (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl))) && leftClickedOnChirp)
+            
+            ctrlToMoveChirper = !config.ctrlToMove || (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl));
+
+            if (Input.GetMouseButton(0) && ctrlToMoveChirper && leftClickedOnChirp)
             {
                 float minDistance = 15.0f; //Minimum distance the user need to drag the mouse for the chirper to move
                 float distanceMoved = ((GetMousePos()) - mousePosOnClick).magnitude;
