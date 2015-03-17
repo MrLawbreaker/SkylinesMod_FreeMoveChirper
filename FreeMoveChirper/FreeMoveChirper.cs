@@ -122,13 +122,6 @@ namespace FreeMoveChirper
                 ResetPosition();
             }
 
-#if DEBUG
-            if (Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.LeftAlt) && Input.GetKeyDown(KeyCode.R))
-            {
-                config = new FMConfiguration();
-            }
-#endif
-
             currentChirperPos = currentChirper.builtinChirperPosition;
         }
 
