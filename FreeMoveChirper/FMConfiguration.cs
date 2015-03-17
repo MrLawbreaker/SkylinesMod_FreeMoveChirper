@@ -16,7 +16,7 @@ namespace FreeMoveChirper
         {
             get
             {
-                string path = string.Format("{0}/{1}/", DataLocation.localApplicationData, "Addons/Mods/FreeMoveChirper");
+                string path = string.Format("{0}/{1}/", DataLocation.localApplicationData, "ModConfig");
                 if (!Directory.Exists(path)) Directory.CreateDirectory(path);
 
                 path += "free-move-chirpy.cfg";
