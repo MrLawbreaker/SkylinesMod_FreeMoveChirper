@@ -63,7 +63,7 @@ namespace FreeMoveChirper
                 else if (line.StartsWith(CTRL_TO_MOVE_KEY + "="))
                 {
                     var splitline = line.Split('=');
-                    ctrlToMove = splitline[1].ToLower().Equals("true");
+                    if (splitline.Length > 1) ctrlToMove = splitline[1].ToLower().Equals("true");
                 }
             }
         }
